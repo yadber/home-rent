@@ -5,7 +5,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 export default function Header() {
   const location = useLocation();
   const navigate = useNavigate();
- 
+
+  function pathMathRoute(route) {
+    if (route === location.pathname) {
+      return true;
+    }
+  }
+   
+  console.log(location.pathname === "/offers")
   return (
     <div className="bg-white border-b shadow-sm sticky top-0 z-50">
       <header className="flex justify-between items-center px-3 max-w-6xl mx-auto">
@@ -20,9 +27,9 @@ export default function Header() {
         <div>
           <ul className="flex space-x-10">
             <li
-              className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
-                ("/"===location.pathname) && "text-black border-b-red-500 "
-              } hover:bg-sky-50 hover:ring-sky-50`}
+              className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-white ${
+                pathMathRoute("/") && "border-b-red-600 text-slate-950"
+              }hover:bg-sky-50 hover:ring-sky-50`}
               onClick={()=>navigate("/")}
 
             >
@@ -30,7 +37,7 @@ export default function Header() {
             </li>
             <li
             className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
-                ("/offers" === location.pathname) && "text-black border-b-red-500"
+              pathMathRoute("/offers") && "text-slate-950 border-b-red-600"
               }  hover:bg-sky-50 hover:ring-sky-50`}
               onClick={()=>navigate("/offers")}
               >
@@ -38,7 +45,7 @@ export default function Header() {
             </li>
             <li
             className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
-                ("/sign-in" === location.pathname) && "text-black border-b-red-500"
+              pathMathRoute("/sign-in") && "text-slate-950 border-b-red-600"
               }  hover:bg-sky-50 hover:ring-sky-50`}
               onClick={()=>navigate("/sign-in")}
               >
