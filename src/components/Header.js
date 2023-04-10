@@ -27,9 +27,9 @@ export default function Header() {
         <div>
           <ul className="flex space-x-10">
             <li
-              className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-white ${
-                pathMathRoute("/") && "border-b-red-600 text-slate-950"
-              }hover:bg-sky-50 hover:ring-sky-50`}
+              className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
+                pathMathRoute("/") &&  "text-slate-950 border-b-red-600"
+              } hover:bg-sky-50 hover:ring-sky-50`}
               onClick={()=>navigate("/")}
 
             >
