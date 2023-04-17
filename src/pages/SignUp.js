@@ -29,8 +29,7 @@ export default function SignUp() {
       
     try {
       const auth = getAuth();
-      const userCredential = await
-      createUserWithEmailAndPassword(auth, email, password)
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password)
       updateProfile(auth.currentUser, {displayName: name})
       const user = userCredential.user;
       const formDataCopy = {...formData};
