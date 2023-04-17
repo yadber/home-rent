@@ -1,5 +1,5 @@
 import React from 'react'
-import key from '../img/key.jpg'
+import key from '../img/key2.jpg'
 import {BiHide,BiShowAlt} from 'react-icons/bi'
 import { Link } from 'react-router-dom'
 import OAuth from '../components/OAuth'
