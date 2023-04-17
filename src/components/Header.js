@@ -1,8 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import homeLogo from "../img/home-logo.jpg";
 import { useLocation, useNavigate } from "react-router-dom";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default function Header() {
+  const [pageState, setPageState] = useState({
+    headerTitle: "Sign in",
+    headerLink : "/sign-in"
+  });
+  const auth = getAuth();
+  useEffect(() => {
+    onAuthStateChanged(auth, (user)=>{
+      if(user){
+        setPageState({headerTitle:"Profile", headerLink:"/profile"})
+      }else{
+        setPageState({headerTitle:"Sign in", headerLink:"/sign-in"})
+      }
+    })
+  }, [auth])
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -40,15 +55,15 @@ export default function Header() {
               }  hover:bg-sky-50 hover:ring-sky-50`}
               onClick={()=>navigate("/offers")}
               >
-            Offers
+            Offers 
             </li>
             <li
             className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
-              pathMathRoute("/sign-in") && "text-slate-950 border-b-red-600 bg-sky-200"
+              (pathMathRoute("/sign-in") || pathMathRoute("/profile")) && "text-slate-950 border-b-red-600 bg-sky-200"
               }  hover:bg-sky-50 hover:ring-sky-50`}
-              onClick={()=>navigate("/sign-in")}
+              onClick={()=>navigate(pageState.headerLink)}
               >
-            Sign In</li>
+            {pageState.headerTitle}</li>
           </ul>
         </div>
       </header>
