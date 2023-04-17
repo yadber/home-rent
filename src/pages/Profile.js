@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { db } from '../firebase';
+import Spinner from '../components/Spinner';
 
 export default function Profile() {
   const auth = getAuth();
@@ -31,6 +32,7 @@ export default function Profile() {
 
   async function ApplyChange(){
     if(changeDetail){
+      
       try {
         if(auth.currentUser.displayName !== name){
           //update display name in firebase authentication 
@@ -42,13 +44,18 @@ export default function Profile() {
           const docRef = doc(db, "users", auth.currentUser.uid);
           await updateDoc(docRef,{name})
           toast.success("profile updated successfully!");
+        }else{
+          
+          toast.info("There is no new change!")
         }
-        toast.info("There is no new change!")
+        
 
       } catch (error) {
+        
         toast.error("sorry, something went wrong")
       }
     }
+   
     setChangeDetail(prevState => !prevState);
   }
 
