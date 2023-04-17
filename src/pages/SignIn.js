@@ -1,10 +1,13 @@
 import React from 'react'
 import key from '../img/key2.jpg'
 import {BiHide,BiShowAlt} from 'react-icons/bi'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import OAuth from '../components/OAuth'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import { Toast, toast } from 'react-toastify'
 
 export default function SignIn() {
+  const navigate = useNavigate()
   const [showPassword, setShowPassword] = React.useState(false)
   const [formData, setFormData] = React.useState({
     email : "",
@@ -18,6 +21,20 @@ export default function SignIn() {
       [e.target.id] : e.target.value
     }))
   }
+
+  async function onSubmit(e){
+    e.preventDefault();
+    try {
+      const auth = getAuth();
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log(userCredential.user)
+      if(userCredential.user){
+        navigate("/")
+      }
+    } catch (error) {
+      toast.error("Bad user credentials")
+    }
+  }
   return (
     <section>
       <h1 className='text-3xl text-center mt-6 font-bold '>Sign In</h1>
@@ -26,7 +43,7 @@ export default function SignIn() {
           <img src={key} alt='Key' className='w-full rounded-2xl'/>
         </div>
         <div  className='w-full md:w-[67%] lg:w-[40%] lg:ml-20'>
-          <form>
+          <form onSubmit={onSubmit}>
             <input type='email' id='email' value={email} placeholder='Email address' 
             className='w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out mb-6' 
             onChange={onChangeValue}/>
