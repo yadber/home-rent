@@ -41,8 +41,9 @@ export default function Profile() {
           // fire store update
           const docRef = doc(db, "users", auth.currentUser.uid);
           await updateDoc(docRef,{name})
+          toast.success("profile updated successfully!");
         }
-        toast.success("profile updated successfully!");
+        toast.info("There is no new change!")
 
       } catch (error) {
         toast.error("sorry, something went wrong")
